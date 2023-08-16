@@ -17,13 +17,13 @@ class MainFragmentViewModel: ViewModel() {
         getWeather()
     }
 
-    fun getWeather() {
+    private fun getWeather() {
         viewModelScope.launch {
             _weather.value = WeatherApi.retrofitService.getWeather(
                 "6c40f3b21c3642b4b8261922231308",
                 "London",
-                "4",
                 "no",
+                "4",
                 "no"
             )
         }

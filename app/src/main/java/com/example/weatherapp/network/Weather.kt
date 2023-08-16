@@ -13,10 +13,10 @@ data class Forecastday (
 )
 
 data class Day (
-    val condition: Condition,
     val avgtemp_c: Float,
     val maxwind_kph: Float,
-    val avghumidity: Float
+    val avghumidity: Float,
+    val condition: Condition
 )
 
 data class Condition (
