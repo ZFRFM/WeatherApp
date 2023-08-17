@@ -15,11 +15,13 @@ import com.example.weatherapp.network.Day
 import com.example.weatherapp.network.Forecast
 import com.example.weatherapp.network.Forecastday
 import com.example.weatherapp.network.Weather
+import com.example.weatherapp.network.WeatherApi
 import com.example.weatherapp.network.WeatherApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -41,27 +43,26 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(
-                Moshi.Builder()
-                    .add(KotlinJsonAdapterFactory())
-                    .build()
-            ))
-            .baseUrl("https://api.weatherapi.com/v1/")
-            .build()
+        recyclerView = binding.cityRecyclerView
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val api = retrofit.create(WeatherApiService::class.java)
-            val model = api.getWeather(
-                "6c40f3b21c3642b4b8261922231308",
-                "Moscow",
-                "no",
-                "4",
-                "no"
-            )
-            binding.cityRecyclerView.adapter = DaysAdapter(model)
+        binding.sendRequestButton.setOnClickListener{
+            CoroutineScope(Dispatchers.Main).launch{
+                val q = binding.cityInputEditText.text.toString()
+                val days = "5"
+                viewModel.getWeather(q, days)
+                val model = viewModel.weather.value
+                repeatUntil(model)
+            }
         }
 
+    }
+
+    private suspend fun repeatUntil(model: Weather?) {
+        if (model != null) recyclerView.adapter = DaysAdapter(model, requireContext())
+        else {
+            delay(100)
+            repeatUntil(viewModel.weather.value)
+        }
     }
 
 }

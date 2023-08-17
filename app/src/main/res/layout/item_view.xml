@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        app:cardCornerRadius="40dp"
-        android:backgroundTint="@color/background_white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/background_white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -40,8 +35,9 @@
                 android:id="@+id/conditionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/conditionIconImageView"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/conditionIconImageView"
+                app:layout_constraintBottom_toTopOf="@id/maxWindKphTextView"
                 android:layout_marginStart="8dp"
                 android:textStyle="bold"
                 tools:text="condition text" />
@@ -50,17 +46,19 @@
                 android:id="@+id/avgTempTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/conditionTextView"
-                app:layout_constraintStart_toEndOf="@id/barrier"
                 android:layout_marginStart="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/conditionTextView"
+                app:layout_constraintBottom_toTopOf="@id/avgHumidityTextView"
                 tools:text="average temperature"/>
 
             <TextView
                 android:id="@+id/maxWindKphTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/avgTempTextView"
+                app:layout_constraintTop_toBottomOf="@id/conditionTextView"
                 app:layout_constraintStart_toEndOf="@id/conditionIconImageView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
                 tools:text="max wind kph" />
@@ -69,21 +67,22 @@
                 android:id="@+id/avgHumidityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/maxWindKphTextView"
-                app:layout_constraintStart_toEndOf="@id/barrier"
-                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="@id/avgTempTextView"
+                app:layout_constraintTop_toBottomOf="@id/avgTempTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="average humidity" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toEndOf="@id/conditionTextView"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:constraint_referenced_ids="conditionTextView,maxWindKphTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

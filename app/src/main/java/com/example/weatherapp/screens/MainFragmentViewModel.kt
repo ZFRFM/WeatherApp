@@ -12,18 +12,19 @@ import kotlinx.coroutines.launch
 class MainFragmentViewModel: ViewModel() {
 
     private val _weather = MutableLiveData<Weather>()
-    val weather: LiveData<Weather> = _weather
-    init {
-        getWeather()
-    }
+    val weather: LiveData<Weather>
+        get() = _weather
 
-    private fun getWeather() {
+    suspend fun getWeather(
+        q: String,
+        days: String
+    ) {
         viewModelScope.launch {
             _weather.value = WeatherApi.retrofitService.getWeather(
                 "6c40f3b21c3642b4b8261922231308",
-                "London",
+                q = q,
                 "no",
-                "4",
+                days = days,
                 "no"
             )
         }
